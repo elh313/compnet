@@ -32,7 +32,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientSocket.send(fromCommand.encode())
     recv2 = clientSocket.recv(1024).decode()
     print(recv2)
-    if recv1[:3] != '250':
+    if recv2[:3] != '250':
         print('250 reply not received from server.')
     # Fill in end
 
@@ -42,7 +42,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientSocket.send(RCPTCommand.encode())
     recv3 = clientSocket.recv(1024).decode()
     print(recv3)
-    if recv1[:3] != '250':
+    if recv3[:3] != '250':
         print('250 reply not received from server.')
     # Fill in end
 
@@ -52,7 +52,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientSocket.send(dataCommand.encode())
     recv4 = clientSocket.recv(1024).decode()
     print(recv4)
-    if recv1[:3] != '250':
+    if recv4[:3] != '250':
         print('250 reply not received from server.')
     # Fill in end
 
@@ -62,7 +62,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientSocket.send(msg.encode())
     recv5 = clientSocket.recv(1024).decode()
     print(recv5)
-    if recv1[:3] != '250':
+    if recv5[:3] != '250':
         print('250 reply not received from server.')
     # Fill in end
 
@@ -71,7 +71,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientSocket.send(endmsg.encode())
     recv6 = clientSocket.recv(1024).decode()
     print(recv6)
-    if recv1[:3] != '250':
+    if recv6[:3] != '250':
         print('250 reply not received from server.')
     # Fill in end
 
@@ -81,7 +81,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientSocket.send(quitCommand.encode())
     recv7 = clientSocket.recv(1024).decode()
     print(recv7)
-    if recv1[:3] != '250':
+    if recv7[:3] != '250':
         print('250 reply not received from server.')
     # Fill in end
 
