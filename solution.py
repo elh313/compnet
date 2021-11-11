@@ -6,6 +6,7 @@ import time
 import select
 import binascii
 # Should use stdev
+from statistics import stdev
 
 ICMP_ECHO_REQUEST = 8
 
@@ -111,7 +112,12 @@ def ping(host, timeout=1):
     print("Pinging " + dest + " using Python:")
     print("")
     # Calculate vars values and return them
-    #  vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
+
+    packet_min = 0
+    packet_avg = 0.0
+    packet_max = 0
+    stdev_var = 0.0
+    vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
     # Send ping requests to a server separated by approximately one second
     for i in range(0,4):
         delay = doOnePing(dest, timeout)
