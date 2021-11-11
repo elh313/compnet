@@ -128,7 +128,7 @@ def ping(host, timeout=1):
     packet_min = 0
     packet_max = 0
     packet_avg = (float(packet_min + packet_max)) / 2.00
-    stdev_var = float(packet_max) - packet_avg
+    stdev_var = int(packet_max - packet_avg)
 
     vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
     # Send ping requests to a server separated by approximately one second
