@@ -116,19 +116,16 @@ def ping(host, timeout=1):
     icmp = getprotobyname("icmp")
 
     if OSError:
-        packet_min = 0
-        packet_avg = 0.0
-        packet_max = 0
-        stdev_var = 0
-        vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)), str(round(stdev(stdev_var), 2))]
+        vars = [str((0)), str(0.0), str(0), str(0.0)]
         return vars
 
 
 
     packet_min = 0
     packet_max = 0
+    data = [packet_min, packet_max]
     packet_avg = (float(packet_min + packet_max)) / 2.00
-    stdev_var = int(packet_max - packet_avg)
+    stdev_var = stdev(data)
 
     vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
     # Send ping requests to a server separated by approximately one second
