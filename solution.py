@@ -113,21 +113,17 @@ def ping(host, timeout=1):
     print("Pinging " + dest + " using Python:")
     print("")
     # Calculate vars values and return them
-    icmp = getprotobyname("icmp")
-
     if OSError:
         vars = [str((0)), str(0.0), str(0), str(0.0)]
         return vars
 
-
-
-    packet_min = 0
-    packet_max = 0
+    packet_min = time.time()
+    packet_max = timeout
     data = [packet_min, packet_max]
     packet_avg = (float(packet_min + packet_max)) / 2.00
     stdev_var = stdev(data)
-
     vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
+
     # Send ping requests to a server separated by approximately one second
     for i in range(0,4):
         delay = doOnePing(dest, timeout)
