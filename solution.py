@@ -59,7 +59,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         type, code, thisChecksum, msgID, seq = struct.unpack("bbHHh", header)
 
         if type == 0 and msgID == ID:
-            return timeReceived - timeSent
+            return timeReceived - startSelect
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
@@ -129,13 +129,13 @@ def ping(host, timeout=1):
     packet_max = max(delayList)
     packet_avg = mean(delayList)
     stdev_var = stdev(delayList)
-    
+
     if OSError:
         vars = [str((0)), str(0.0), str(0), str(0.0)]
         return vars
 
     vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),
-            str(round(stdev_var), 2))]
+            str(round(stdev_var), 2)]
 
     return vars
 
