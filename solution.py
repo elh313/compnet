@@ -6,6 +6,7 @@ import time
 import select
 import binascii
 # Should use stdev
+from statistics import stdev
 
 ICMP_ECHO_REQUEST = 8
 
@@ -48,13 +49,17 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         recPacket, addr = mySocket.recvfrom(1024)
 
         # Fill in start
+
+
         # reverse it. packet = header + data so we're gonna separate the two here
+        # Fetch the ICMP header from the IP packet
         header = recPacket[20:28]
         data = recPacket[28:]
-        type, code, thisChecksum, thisID, seq = struct.unpack("bbHHh", header)
-        if thisID == ID:
-            return startedSelect - timeout
-        # Fetch the ICMP header from the IP packet
+        info, timeSent = struct.unpack("d", data)
+        type, code, thisChecksum, msgID, seq = struct.unpack("bbHHh", header)
+
+        if type == 0 and msgID == ID:
+            return timeReceived - timeSent
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
@@ -106,15 +111,26 @@ def doOnePing(destAddr, timeout):
 
 
 def ping(host, timeout=1):
-    # timeout=1 means: If one second goes by without a reply from the server,  	# the client assumes that either the client's ping or the server's pong is lost
+    # timeout=1 means: If one second goes by without a reply from the server,
+    # the client assumes that either the client's ping or the server's pong is lost
     dest = gethostbyname(host)
     print("Pinging " + dest + " using Python:")
     print("")
     # Calculate vars values and return them
-    #  vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
+    if OSError:
+        vars = [str((0)), str(0.0), str(0), str(0.0)]
+        return vars
+
+    packet_min = time.time()
+    packet_max = timeout + packet_min
+    data = [packet_min, packet_max]
+    packet_avg = (float(packet_min + packet_max)) / 2.00
+    stdev_var = stdev(data)
+    vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
+
     # Send ping requests to a server separated by approximately one second
     for i in range(0,4):
-        delay = doOnePing(dest, timeout)
+        delay = doOnePing(dest, timeout) *1000
         print(delay)
         time.sleep(1)  # one second
 
