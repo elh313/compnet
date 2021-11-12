@@ -34,7 +34,6 @@ def checksum(string):
     return answer
 
 
-
 def receiveOnePing(mySocket, ID, timeout, destAddr):
     timeLeft = timeout
 
@@ -49,7 +48,6 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         recPacket, addr = mySocket.recvfrom(1024)
 
         # Fill in start
-
 
         # reverse it. packet = header + data so we're gonna separate the two here
         # Fetch the ICMP header from the IP packet
@@ -84,19 +82,17 @@ def sendOnePing(mySocket, destAddr, ID):
     else:
         myChecksum = htons(myChecksum)
 
-
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, ID, 1)
     packet = header + data
 
     mySocket.sendto(packet, (destAddr, 1))  # AF_INET address must be tuple, not str
 
-
     # Both LISTS and TUPLES consist of a number of objects
     # which can be referenced by their position number within the object.
 
+
 def doOnePing(destAddr, timeout):
     icmp = getprotobyname("icmp")
-
 
     # SOCK_RAW is a powerful socket type. For more details:   http://sockraw.org/papers/sock_raw
     mySocket = socket(AF_INET, SOCK_RAW, icmp)
@@ -115,14 +111,18 @@ def ping(host, timeout=1):
     print("Pinging " + dest + " using Python:")
     print("")
     # Calculate vars values and return them
-    delayList =[]
-    vars = [str((0)), str(0.0), str(0), str(0.0)]
+    delayList = []
+
     # Send ping requests to a server separated by approximately one second
-    for i in range(0,4):
-        delay = doOnePing(dest, timeout) *1000
+    for i in range(0, 4):
+        delay = doOnePing(dest, timeout) * 1000
         delayList.append(delay)
         print(delay)
         time.sleep(1)  # one second
+
+    if OSError:
+        vars = [str((0)), str(0.0), str(0), str(0.0)]
+        return vars
     
     packet_min = min(delayList)
     packet_max = max(delayList)
@@ -133,6 +133,7 @@ def ping(host, timeout=1):
             str(round(stdev_var), 2)]
 
     return vars
+
 
 if __name__ == '__main__':
     ping("google.co.il")
