@@ -121,14 +121,14 @@ def ping(host, timeout=1):
         time.sleep(1)  # one second
 
     if OSError:
-        vars = [str((0)), str(0.0), str(0), str(0.0)]
+        vars = [str(0), str(0.0), str(0), str(0.0)]
         return vars
-    
+
     packet_min = min(delayList)
     packet_max = max(delayList)
     packet_avg = mean(delayList)
     stdev_var = stdev(delayList)
-    
+
     vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),
             str(round(stdev_var), 2)]
 
