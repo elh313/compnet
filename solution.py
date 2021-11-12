@@ -54,8 +54,6 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         # reverse it. packet = header + data so we're gonna separate the two here
         # Fetch the ICMP header from the IP packet
         header = recPacket[20:28]
-        data = recPacket[28:]
-        info, timeSent = struct.unpack("d", data)
         type, code, thisChecksum, msgID, seq = struct.unpack("bbHHh", header)
 
         if type == 0 and msgID == ID:
@@ -125,12 +123,14 @@ def ping(host, timeout=1):
         print(delay)
         time.sleep(1)  # one second
 
-    packet_min = min(delayList)
-    packet_max = max(delayList)
-    packet_avg = mean(delayList)
-    stdev_var = stdev(delayList)
+    if len(delayList) > 0:
 
-    if OSError:
+        packet_min = min(delayList)
+        packet_max = max(delayList)
+        packet_avg = mean(delayList)
+        stdev_var = stdev(delayList)
+
+    else:
         vars = [str((0)), str(0.0), str(0), str(0.0)]
         return vars
 
