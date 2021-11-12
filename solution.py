@@ -59,7 +59,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         type, code, thisChecksum, msgID, seq = struct.unpack("bbHHh", header)
 
         if type == 0 and msgID == ID:
-            return timeReceived - timeSent
+            return timeReceived - startedSelect
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
