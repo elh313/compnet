@@ -117,10 +117,6 @@ def ping(host, timeout=1):
     print("Pinging " + dest + " using Python:")
     print("")
     # Calculate vars values and return them
-    if OSError:
-        vars = [str((0)), str(0.0), str(0), str(0.0)]
-        return vars
-
     delayList =[]
     # Send ping requests to a server separated by approximately one second
     for i in range(0,4):
@@ -128,11 +124,16 @@ def ping(host, timeout=1):
         delayList.append(delay)
         print(delay)
         time.sleep(1)  # one second
-        
+
     packet_min = min(delayList)
     packet_max = max(delayList)
     packet_avg = mean(delayList)
     stdev_var = stdev(delayList)
+    
+    if OSError:
+        vars = [str((0)), str(0.0), str(0), str(0.0)]
+        return vars
+
     vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),
             str(round(stdev(stdev_var), 2))]
 
