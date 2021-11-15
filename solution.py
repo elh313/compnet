@@ -64,10 +64,10 @@ def build_packet():
 
 def get_route(hostname):
     timeLeft = TIMEOUT
-    tracelist1 = [] 
+    tracelist1 = []
     #This is your list to use when iterating through each trace
     #Your trace must collect hop number, roundtrip time (rtt), host ip, and the hostname.
-    tracelist2 = [] 
+    tracelist2 = []
     #This is your list to contain all traces
     icmp = getprotobyname("icmp")
 
@@ -87,7 +87,7 @@ def get_route(hostname):
                 startedSelect = time.time()
                 whatReady = select.select([mySocket], [], [], timeLeft)
                 howLongInSelect = (time.time() - startedSelect)
-                if whatReady[0] == []: 
+                if whatReady[0] == []:
                     # Timeout
                     tracelist1.append("* * * Request timed out.")
                     #Fill in start
@@ -112,14 +112,14 @@ def get_route(hostname):
                 header = recvPacket[20:28]
                 types, code, thisChecksum, msgID, seq = struct.unpack("bbHHh", header)
                 #Fill in end
-                try: 
+                try:
                     #try to fetch the hostname
                     #Fill in start
                     ipHeader = recvPacket[:20]
                     ver, headLen, TOS, length, IDs, flagsAndFrags, TTl, protocol, ipHeaderChecksum, srcAddy, destAddy = struct.unpack("! B B H H H B B H 4s 4s", ipHeader)
                     hostname = gethostbyname(srcAddy)
                     #Fill in end
-                except herror:   
+                except herror:
                     #if the host does not provide a hostname
                     #Fill in start
                     hostname = "hostname not returnable"
@@ -164,9 +164,10 @@ def get_route(hostname):
                 else:
                     #Fill in start
                     #If there is an exception/error to your if statements, you should append that to your list here
-                    tracelist2.append("* * *ERROR")
+                    tracelist1.append(" * * * ERROR")
+                    tracelist2.append(tracelist1)
+                    
                     #Fill in end
                 break
             finally:
                 mySocket.close()
-            
