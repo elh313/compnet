@@ -66,7 +66,8 @@ def get_route(hostname):
     tracelist1 = [] #This is your list to use when iterating through each trace
         #Your trace must collect hop number, roundtrip time (rtt), host ip, and the hostname.
     tracelist2 = [] #This is your list to contain all traces
-
+    icmp = getprotobyname("icmp")
+    
     for ttl in range(1,MAX_HOPS):
         for tries in range(TRIES):
             destAddr = gethostbyname(hostname)
