@@ -42,6 +42,7 @@ def build_packet():
     myChecksum = 0
     # Make a dummy header with a 0 checksum
     # struct -- Interpret strings as packed binary data
+    ID = os.getpid() & 0xFFFF
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, ID, 1)
     data = struct.pack("d", time.time())
 
@@ -67,7 +68,7 @@ def get_route(hostname):
         #Your trace must collect hop number, roundtrip time (rtt), host ip, and the hostname.
     tracelist2 = [] #This is your list to contain all traces
     icmp = getprotobyname("icmp")
-    
+
     for ttl in range(1,MAX_HOPS):
         for tries in range(TRIES):
             destAddr = gethostbyname(hostname)
