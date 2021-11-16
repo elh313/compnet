@@ -115,9 +115,7 @@ def get_route(hostname):
                 try:
                     #try to fetch the hostname
                     #Fill in start
-                    ipHeader = recvPacket[:20]
-                    # ver, headLen, TOS, length, IDs, flagsAndFrags, TTl, protocol, ipHeaderChecksum, srcAddy, destAddy = struct.unpack("! B B H H H B B H 4s 4s", ipHeader)
-                    hostname = gethostbyname(addr)
+                    hostname = gethostbyname(str(addr))
                     #Fill in end
                 except herror:
                     #if the host does not provide a hostname
