@@ -115,7 +115,7 @@ def get_route(hostname):
                 try:
                     #try to fetch the hostname
                     #Fill in start
-                    hostname = gethostbyname(str(addr))
+                    hostname = gethostbyname(addr)
                     #Fill in end
                 except herror:
                     #if the host does not provide a hostname
