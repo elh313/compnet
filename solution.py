@@ -76,7 +76,7 @@ def get_route(hostname):
             destAddr = gethostbyname(hostname)
             #Fill in start
             # Make a raw socket named mySocket
-            mySocket = socket.socket(AF_INET, SOCK_RAW, icmp)
+            mySocket = socket(AF_INET, SOCK_RAW, icmp)
             #Fill in end
             mySocket.setsockopt(IPPROTO_IP, IP_TTL, struct.pack('I', ttl))
             mySocket.settimeout(TIMEOUT)
