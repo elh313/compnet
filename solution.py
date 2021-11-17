@@ -75,6 +75,7 @@ def get_route(hostname):
         for tries in range(TRIES):
             destAddr = gethostbyname(hostname)
             #Fill in start
+            tracelist1 = []
             # Make a raw socket named mySocket
             mySocket = socket(AF_INET, SOCK_RAW, icmp)
             #Fill in end
@@ -82,7 +83,7 @@ def get_route(hostname):
             mySocket.settimeout(TIMEOUT)
             try:
                 d = build_packet()
-                mySocket.sendto(d, (hostname, 0))
+                mySocket.sendto(d, (destAddr, 0))
                 t = time.time()
                 startedSelect = time.time()
                 whatReady = select.select([mySocket], [], [], timeLeft)
@@ -116,13 +117,13 @@ def get_route(hostname):
                 try:
                     #try to fetch the hostname
                     #Fill in start
-                    hostname = gethostbyaddr(addr[0])[0]
+                    hname = gethostbyaddr(addr[0])[0]
 
                     #Fill in end
                 except herror:
                     #if the host does not provide a hostname
                     #Fill in start
-                    hostname = "hostname not returnable"
+                    hname = "hostname not returnable"
                     #Fill in end
 
                 if types == 11:
@@ -133,7 +134,7 @@ def get_route(hostname):
                     tracelist1.append(str(ttl))
                     tracelist1.append(str(rtt) + "ms")
                     tracelist1.append(str(addr[0]))
-                    tracelist1.append(str(hostname))
+                    tracelist1.append(str(hname))
                     tracelist2.append(tracelist1)
                     #You should add your responses to your lists here
                     #Fill in end
@@ -157,7 +158,7 @@ def get_route(hostname):
                     tracelist1.append(str(ttl))
                     tracelist1.append(str(rtt) + "ms")
                     tracelist1.append(str(addr[0]))
-                    tracelist1.append(str(hostname))
+                    tracelist1.append(str(hname))
                     tracelist2.append(list(tracelist1))
                     return tracelist2
                     #You should add your responses to your lists here and return your list if your destination IP is met
